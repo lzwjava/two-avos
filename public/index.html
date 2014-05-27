@@ -4,7 +4,8 @@
 
 <title>两个</title>
 
-<script>
+<script language="javascript">
+    var apkUrl;
     function httpGet(theUrl) {
         var xmlHttp = null;
         xmlHttp = new XMLHttpRequest();
@@ -14,36 +15,44 @@
             var responseText = xmlHttp.responseText;
             console.log(responseText);
             // process the response.
-            document.getElementById("apkPath").value = responseText;
+            var elem = document.getElementById("apkPath");
+            elem.value = responseText;
+            var progress = document.getElementById("progress");
+            progress.style.display = "none";
+            var img = document.getElementById("img");
+            img.setAttribute('src', 'http://qr.liantu.com/api.php?text=' + responseText);
+            var download = document.getElementById("download");
+            download.setAttribute('href', responseText);
+            apkUrl = responseText;
+            var tips=document.getElementById('tips');
+            tips.style.display='inline';
         };
         xmlHttp.onerror = function () {
             console.log('There was an error!');
         };
+        var progress = document.getElementById("progress");
+        progress.style.display = "inline";
         xmlHttp.send();
     }
+
+
 </script>
 
 <body bgcolor="#00bfff"
-      class="content"
-        >
+      class="content">
 <style media="screen" type="text/css">
     .btnStyle1 {
-        width: 100px;
+        width: auto;
         height: 50px;
         font-size: xx-large;
         display: table-cell;
-        margin-top: 20%;
-        vertical-align: middle;
-        margin-left: 40%;
+        margin-top: 20px;
     }
 
     .textStyle {
-        width: 50%;
+        width: 200px;
         height: 30px;
         font-size: medium;
-        margin-left: 30%;
-        display: table-cell;
-        vertical-align: middle;
     }
 
     .content {
@@ -53,7 +62,6 @@
     }
 
     .infoText {
-        margin-top: 100px;
         font-size: medium;
         color: white;
     }
@@ -61,7 +69,6 @@
     .bigText {
         font-size: x-large;
         color: white;
-        text-align: center;
     }
 
     .title {
@@ -82,6 +89,34 @@
     .div-inline {
         display: inline
     }
+
+    .apkPath {
+        margin-left: 20%;
+    }
+
+    #progressbar {
+        background-color: black;
+        border-radius: 13px; /* (height of inner div) / 2 + padding */
+        padding: 3px;
+    }
+
+    #progressbar > div {
+        background-color: orange;
+        width: 50%; /* Adjust with JavaScript */
+        height: 20px;
+        border-radius: 10px;
+    }
+
+    .banner {
+        width: 105px;
+        height: 51px;
+        display: block;
+        border: 2px solid #fff;
+        font-size: 20px;
+        line-height: 51px;
+        padding-left: 65px;
+        position: absolute;
+    }
 </style>
 
 <table border="0">
@@ -89,40 +124,61 @@
         <td>
             <img src="images/a.png">
         </td>
-        <td>
-            <p class="title">两个</p>
+        <td style="text-align: center">
+            <div>
+                <p class="title">两个</p>
 
-            <p class="bigText">只属于你和Ta的聊天软件</p>
+                <p class="bigText">只属于你和Ta的聊天软件</p>
+            </div>
 
             <p>
                 <button type="button" class="btnStyle1"
                         id="gen"
                         onclick="function genApk(){
-          httpGet('http://114.215.107.217:8080/two/gen');
+                       httpGet('http://114.215.107.217:8080/two/gen');
           /*console.log(url);*/
-          /*alert(url+'hi');*/
-        }
-        genApk()">生成
+                 /*alert(url+'hi');*/
+            }
+          genApk()">Make One
                 </button>
             </p>
 
-            <div class="div-inline">
-                <p>apk地址</p>
-            </div>
-            <div class="div-inline">
-                <input class="textStyle"
-                       id="apkPath">
-            </div>
-            <div>
-                <p class="infoText">
-                    《两个》，是我一时兴起之作。我喜欢她，但她有男朋友了。我还是很喜欢她。那天，我在想，我能不能做个app给她。然后，这个就是！我只有点击上面的生成按钮，得到一个世界上独一无二的app，我发送给她，她装上后，我俩就能在一个只有我俩能聊天的框框里面聊天。如果我再把app再发给一个人，Ta也能在上面聊，Ta就是小三！对的，每次单击生成按钮，得到的app都是独一无二的。</p>
-            </div>
+            <p>
+                <progress id="progress" style="width: 100%; display:none;
+            margin-bottom: 10px"></progress>
+            </p>
+
+            <table style="text-align: center;margin-top: 20px"
+                    id="resultTable">
+                <tr>
+                        <img id="img"
+                             src="http://qr.liantu.com/api.php?text="
+                             width="200px"/>
+                </tr>
+                <tr>
+                    <td>
+                        <p style="color: white;width: auto;">app地址</p>
+                    </td>
+                    <td><input class="textStyle"
+                               id="apkPath"></td>
+                    <td>
+                        <a id="download" href="">下载</a>
+                    </td>
+                </tr>
+            </table>
+            <p id="tips" style="color: white ;display: none">拿你俩手机的手机扫一扫<br>或把链接发给Ta吧</p>
         </td>
         <td>
             <img src="images/b.png">
         </td>
     </tr>
 </table>
+
+
+<p class="infoText"
+        style="margin-left: 10% ;margin-right: 10%">
+    缘起：我喜欢她，但她有男朋友了。我还是很喜欢她。^_^那天，我在想，我能不能做个app给她。然后，这个就是！我只有点击上面的生成按钮，得到一个世界上独一无二的app，我发送给她，她装上后，我俩就能在一个只有我俩能聊天的框框里面聊天。如果我再把app再发给一个人，Ta也能在上面聊，Ta就是小三！对的，每次单击生成按钮，得到的app都是独一无二的。</p>
+
 
 </body>
 </html>
