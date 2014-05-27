@@ -1,0 +1,1 @@
+document.getElementById("gen").onclick = function () { alert('hello!'); };
