@@ -8,7 +8,7 @@ app.set('view engine', 'ejs');    // 设置 template 引擎
 app.use(express.bodyParser());    // 读取请求 body 的中间件
 
 app.get('/',function(req,res){
-    res.write('/public/index.html');
+    res.redirect('/index.html');
 });
 
 app.get('/hello', function(req, res) {
