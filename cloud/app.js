@@ -11,13 +11,13 @@ function webUpdate(res) {
     res.redirect('/webUpdate.html');
 }
 app.get('/',function(req,res){
-    //res.redirect('/index.html');
-    webUpdate(res);
+    res.redirect('/index.html');
+    //webUpdate(res);
 });
 
-app.get('/index.html',function(req,res){
-    webUpdate(res);
-});
+/*app.get('/index.html',function(req,res){
+    //webUpdate(res);
+});*/
 
 app.get('/hello', function(req, res) {
   res.render('hello', { message: 'Congrats, you just set up your app!' });
