@@ -11,8 +11,8 @@ function webUpdate(res) {
     res.redirect('/webUpdate.html');
 }
 app.get('/',function(req,res){
-    res.redirect('/index.html');
-    //webUpdate(res);
+    //res.redirect('/index.html');
+    webUpdate(res);
 });
 
 /*app.get('/index.html',function(req,res){
